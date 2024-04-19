@@ -1,0 +1,24 @@
+name: dadapy_usage
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - black
+  - flake8
+  - ipython
+  - isort
+  - joblib
+  - matplotlib
+  - numpy
+  - pytest
+  - python=3.9
+  - scikit-learn
+  - scipy
+  - tox
+  - cython
+  - coverage
+  - ipykernel
+  - ase
+  - numba
+  - umap-learn
+prefix: /home/fwodacze/anaconda3/envs/dadapy
