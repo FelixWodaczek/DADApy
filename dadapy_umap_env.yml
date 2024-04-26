@@ -3,22 +3,22 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - ase
   - black
+  - coverage
+  - cython
   - flake8
+  - ipykernel
   - ipython
   - isort
   - joblib
   - matplotlib
+  - numba
   - numpy
   - pytest
   - python=3.9
   - scikit-learn
   - scipy
   - tox
-  - cython
-  - coverage
-  - ipykernel
-  - ase
-  - numba
   - umap-learn
-prefix: /home/fwodacze/anaconda3/envs/dadapy
+prefix: /home/fwodacze/anaconda3/envs/dadapy_usage
