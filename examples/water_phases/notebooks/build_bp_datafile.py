@@ -1,10 +1,13 @@
-import os
-import numpy as np
+import pathlib
 import re
+
+import numpy as np
 from ase.io import read as ase_read
 
 def main():
-    liquid_frames = ase_read("../ice_in_water_data/dataset_1000_eVAng.xyz", index=':')
+    test_dir = pathlib.Path(__file__).resolve().parent.parent.joinpath('data')
+
+    liquid_frames = ase_read(test_dir.joinpath("ice_in_water_data/dataset_1000_eVAng.xyz"), index=':')
 
     with open("../ice_in_water_data/dataset_1000_eVAng.xyz", 'r') as f:
         file_content = f.read()

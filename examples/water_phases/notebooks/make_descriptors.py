@@ -1,16 +1,19 @@
+import pathlib
+
 import numpy as np
 from ase.io import read as ase_read
 from dscribe.descriptors import ACSF, SOAP
-import os
 
 def main():
+    test_dir = pathlib.Path(__file__).resolve().parent.parent.joinpath('data')
+
     # If this is set to true, eta will be converted so it will be in the given range when converted to bohr radii
     make_in_bohr = True
     if make_in_bohr:
         fact = 1.8897259886**2.
 
-    ice_in_water_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ice_in_water_data')
-    target_xyz = os.path.join(ice_in_water_dir, 'H2O-n6-l6-c6.0-g0.3-pca-d10.xyz')
+    ice_in_water_dir = test_dir.joinpath('ice_in_water_data')
+    target_xyz = ice_in_water_dir.joinpath('H2O-n6-l6-c6.0-g0.3-pca-d10.xyz')
     frames = ase_read(target_xyz, index=':')
 
     # ACSF targets
@@ -21,8 +24,8 @@ def main():
     g2_params = np.array([[eta*fact, 0.] for eta in np.logspace(-3, 0.5, 15)], dtype=np.float32)
     g4_params = np.meshgrid(etas, zetas, lambdas)
     g4_params = np.array(g4_params).reshape((3, -1)).T
-    np.savetxt("g2_params.txt", g2_params, header='eta log -3, 0.5 15')
-    np.savetxt("g4_params.txt", g4_params, header='eta log -3 -1 6, zeta [1, 2, 3, 4], lambda [-1, 1]')
+    np.savetxt(ice_in_water_dir.joinpath("g2_params.txt"), g2_params, header='eta log -3, 0.5 15')
+    np.savetxt(ice_in_water_dir.joinpath("g4_params.txt"), g4_params, header='eta log -3 -1 6, zeta [1, 2, 3, 4], lambda [-1, 1]')
 
     acsf = ACSF(
         species=[1, 8],
@@ -59,19 +62,8 @@ def main():
         if not (ii_frame%10):
             print(ii_frame)
 
-    np.save(os.path.join(ice_in_water_dir, 'average_acsf_rcut6_gridsearch_bohr_lambda.npy'), average_desc)
-    np.save(os.path.join(ice_in_water_dir, 'singleatom_acsf_rcut6_gridsearch_bohr_lambda.npy'), singleo_desc)
+    np.save(ice_in_water_dir.joinpath('average_acsf_rcut6_gridsearch_bohr_lambda.npy'), average_desc)
+    np.save(ice_in_water_dir.joinpath('singleatom_acsf_rcut6_gridsearch_bohr_lambda.npy'), singleo_desc)
 
 if __name__ == '__main__':
     main()
-    if False:
-        import timeit
-        setup = '''
-    import sys, os
-    print(os.path.abspath("./trial_notebooks/"))
-    sys.path.append(os.path.abspath("./trial_notebooks/"))
-
-    import make_acsf as macsf
-        '''
-        ret = timeit.repeat("macsf.main()", setup=setup, number=1)
-        print(ret)

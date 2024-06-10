@@ -1,6 +1,9 @@
+import pathlib
 import numpy as np
 
 def main():
+    test_dir = pathlib.Path(__file__).resolve().parent.parent.joinpath('data')
+
     to_bohr = True
     mult = 1.
     if to_bohr:
@@ -9,23 +12,23 @@ def main():
 
     atom_types = ['H', 'O'] # Need to be in order of atomic numbers
 
-    with open('n2p2_fitting/run_pot/input_mask.txt', 'r') as f: 
+    with open(test_dir.joinpath('n2p2_fitting/run_pot/input_mask.txt'), 'r') as f: 
         input_header = f.read()
         f.close()
 
-    g2_params = np.loadtxt('ice_in_water_data/g2_params_gridsearch_bohr_lambda.txt')
-    g4_params = np.loadtxt('ice_in_water_data/g4_params_gridsearch_bohr_lambda.txt')
+    g2_params = np.loadtxt(test_dir.joinpath('ice_in_water_data/g2_params_gridsearch_bohr_lambda.txt'))
+    g4_params = np.loadtxt(test_dir.joinpath('ice_in_water_data/g4_params_gridsearch_bohr_lambda.txt'))
 
     select_gammas = True
     n_desc = 10
-    lasso_gammas = np.load('trial_notebooks/lasso_gammas_hartbohr_lambda.npy')[n_desc]
+    lasso_gammas = np.load(test_dir.joinpath('water_phase_store/lasso_gammas_hartbohr_lambda.npy'))[n_desc]
     if not select_gammas:
         lasso_gammas = [1.0]*lasso_gammas.shape[0]
     if False: # For random generation
         lasso_gammas[:] = 0.
         lasso_gammas[np.random.choice(len(lasso_gammas), (n_desc), replace=False).astype(dtype=np.int16)] = 1.
 
-    with open('n2p2_fitting/run_pot/input.nn', 'w') as f:
+    with open(test_dir.joinpath('n2p2_fitting/run_pot/input.nn'), 'w') as f:
         f.write(input_header+'\n')
 
         counter = 0
