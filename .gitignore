@@ -231,6 +231,6 @@ dadapy/_cython/.*
 examples/datasets/mnist.npy
 examples/datasets/isolet_float32.npy
 examples/datasets/isomap_faces.npy
-
+examples/water_phases/data
 
 # End of https://www.toptal.com/developers/gitignore/api/python,emacs,vim
