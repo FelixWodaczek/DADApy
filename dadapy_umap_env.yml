@@ -1,24 +1,15 @@
 name: dadapy_usage
 channels:
-  - conda-forge
   - defaults
 dependencies:
-  - ase
-  - black
-  - coverage
-  - cython
-  - flake8
-  - ipykernel
   - ipython
-  - isort
   - joblib
   - matplotlib
-  - numba
-  - numpy
-  - pytest
+  - numpy[version='<2.0']
   - python=3.9
   - scikit-learn
   - scipy
-  - tox
-  - umap-learn
-prefix: /home/fwodacze/anaconda3/envs/dadapy_usage
+  - ipykernel
+  - conda-forge::ase
+  - conda-forge::dscribe
+prefix: /opt/homebrew/Caskroom/miniconda/base/envs/dadapy_usage
