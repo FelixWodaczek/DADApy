@@ -17,7 +17,7 @@ class FileSystemCreator:
         self.weights_path = weights_path
 
     def copy_datafile(self):
-        shutil.copy(self.mask_dir.joinpath('input.data'), self.target_path.joinpath('input.data'))
+        shutil.copy(self.mask_dir.joinpath('bc_input.data'), self.target_path.joinpath('input.data'))
 
     def copy_runfile(self, nfeatures:int, mode:str='nearest'):
         available_modes = {'nearest', 'exact'}
@@ -126,7 +126,7 @@ def main():
         weights_path = data_path.joinpath(
             f'water_phase_store/weights_per_nfeatures_ndata_{ndata}.txt'
         )
-        target_path = data_path.joinpath(f'n2p2_fitting/240724_pot_si_ndatas/ndata_{ndata}_nfeat_{nfeat}')
+        target_path = data_path.joinpath(f'n2p2_fitting/240805_pot_si_ndatas/ndata_{ndata}_nfeat_{nfeat}')
         if not target_path.exists():
             target_path.mkdir()
         fs_creator = FileSystemCreator(

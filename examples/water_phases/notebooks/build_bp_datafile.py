@@ -9,7 +9,7 @@ def main():
 
     liquid_frames = ase_read(test_dir.joinpath("ice_in_water_data/dataset_1000_eVAng.xyz"), index=':')
 
-    with open("../ice_in_water_data/dataset_1000_eVAng.xyz", 'r') as f:
+    with open(test_dir.joinpath("ice_in_water_data/dataset_1000_eVAng.xyz"), 'r') as f:
         file_content = f.read()
         f.close()
 
@@ -27,7 +27,7 @@ def main():
     liquid_energies = np.asarray([float(energy) for buff, energy in re.findall(energy_pattern, file_content)], dtype=np.float32)
 
     atom_counter = 0
-    with open('liquid_input.data', 'w') as f:
+    with open(test_dir.joinpath('n2p2_fitting/run_pot/liquid_input.data'), 'w') as f:
         for ii_frame, frame in enumerate(liquid_frames):
             f.write('begin\n')
 
